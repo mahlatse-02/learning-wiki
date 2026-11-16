@@ -1,0 +1,17 @@
+# Python virtual environment
+venv/
+.venv/
+
+# MkDocs generated website
+site/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# VS Code settings (optional)
+.vscode/

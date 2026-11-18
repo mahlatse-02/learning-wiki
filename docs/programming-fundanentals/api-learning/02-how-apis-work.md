@@ -53,7 +53,7 @@ It consists of the following stages:
 
 2. **Processing:** The server receives and processes the request according to thte API's logic.
 
-3. **Response:** The server receives a response containing the result of the request and an appropriate HTTP status code.
+3. **Response:** The server sends a response containing the result of the request and an appropriate HTTP status code.
 
 4. **Reception:** The client receives the response and interpretes the retirned information.
 
@@ -85,13 +85,17 @@ For example, a registration form sends an HTTP request containing the informatio
 
 An HTTP request consists of four main components:
 
-1. **HTTP Method:** Specifies the action the client wants the server to perform
+1. **HTTP Method:** Specifies the action the client wants
+   the server to perform.
 
-2. **URL (Endpoint):** Provide additional informatiion about the request, such as the content type or authorization details.
+2. **URL (Endpoint):** Identifies the resource or functionality
+   that the client wants to access.
 
-3. **Headers:** Provide additional information about the request, such as the content type or authentication detais.
+3. **Headers:** Provide additional information about the
+   request, such as the content type or authentication details.
 
-4. **Body:** Contains data sent from the client to the server. It is commonly used when creating or updating resources.
+4. **Body:** Contains data sent from the client to the server.
+   It is commonly used when creating or updating resources.
 
 
 **Example: User Registration**
@@ -110,3 +114,182 @@ The server processes this information and validates it before creating a new use
 
 The request bosy carries the submitted information, but the server is responsible for validating it. For example, the server shoud check whether an email address is already registered before creating a new account.
 
+### 2.2 HTTP Methods
+
+An HTTP method specifies the action that a client wants the server to perform on a particular resource.
+
+Common HTTP methods include:
+
+| Method | Purpose | Example |
+|---|---|---|
+| GET | Retrieve information | Retrieve a user's profile |
+| POST | Submit information or create a resource | Register a new user |
+| PUT | Replace an existing resource | Replace a user's profile |
+| PATCH | Partially update a resource | Change only a user's email |
+| DELETE | Remove a resource | Delete a user's account |
+
+**PUT vs PATCH**
+
+- PUT replaces the existing resource with the supplied representation.
+- PATCH modifies only specific parts of an existing resiurce
+
+### 2.3 Understanding resource Endpoints
+
+An endpoint identifies the resource or functionality that a client wants to access through an API.
+
+For example:
+
+   GET /api/products
+
+This endpoint accesses the products collected and typically returns a list of products.
+
+   GET /api/products/25
+
+This endpoint accesses a specific product identified by the ID 25.
+
+**Important distinction**
+
+- '/api/products' refers to a collection of products
+- '/api/products/25' refers to one specific product
+
+The HTTP method determines the action to perform while the endpoint identifies the resource involved
+
+### 2.4 HTTP Request Headers
+
+HTTP headers provide additional information (metadata) about an HTTP request. They help the server understand how to interpret the request and handle the information being sent.
+
+Common HTTP request headers include:
+
+**1. Host**
+
+Identifies the server's domain name.
+
+Example:
+'Host: example.com'
+
+**2. Content-Type**
+
+Specifies the format of the data being sent in the request body.
+
+Example:
+'Content-Type: application/json'
+
+This tells the server that the request body contains JSON0frmatted data.
+
+**3. Accept**
+
+Specifies the response format that the client can accept.
+
+Example:
+'Accept: application/json'
+
+**4. Authorization**
+
+Can contain authorization credentials, such as an access token, used by the server to verify the client's identity or permissions.
+
+Example:
+'Authorization: Bearer <token>'
+
+**Important distinction:**
+
+- Content-Type describes the format of the data being sent.
+- Accept describes the response format the client can accept.
+
+### 2.5 HTTP Request Body
+
+The request body is the part of an HTTP request that contains data the client wants to send to the server.
+
+It is commonly used when:
+
+- Registering a new user.
+- Submitting a login form.
+- Creating a new product.
+- Updating existing information.
+
+A request body is not required for every HTTP request.
+For example, a typical GET request retrieves information without needing a request body.
+
+#### Understanding JSON
+
+JSON (JavaScript Object Notation) is a lightweight data-interchange format used by applications to exchange structured information.
+
+Example of a JSON request body:
+
+    {
+      "firstName": "John",
+      "lastName": "Smith",
+      "email": "john@example.com",
+      "password": "password123"
+    }
+
+#### Understanding JSON Structure
+
+A JSON object contains key-value pairs.
+
+- Keys identify pieces of information.
+- Values represent the information associated with those keys.
+- A colon separates a key from its value.
+- Commas separate key-value pairs.
+- Curly brackets define a JSON object.
+
+#### JSON Data Types
+
+JSON supports six data types:
+
+1. **String:** Text enclosed in double quotation marks.
+2. **Number:** Numeric values, including integers and decimals.
+3. **Boolean:** Logical values represented by `true` or `false`.
+4. **Object:** A collection of key-value pairs enclosed in `{ }`.
+5. **Array:** An ordered collection of values enclosed in `[ ]`.
+6. **Null:** Represents the absence of a value.
+
+The client sends JSON data in the request body, and the server processes it according to the API's logic.
+
+### 2.6 Putting an HTTP Request Together
+
+An HTTP request combines the method, endpoint, headers
+and request body to communicate the client's intentions
+to the server.
+
+Example:
+
+    PUT /api/products/25 HTTP/1.1
+    Host: shop.example.com
+    Content-Type: application/json
+    Accept: application/json
+
+    {
+      "price": 9500,
+      "inStock": false
+    }
+
+**Breaking down the request:**
+
+1. **HTTP Method:** `PUT`
+   - Indicates that the client wants to replace an existing
+     resource with the supplied representation.
+
+2. **Endpoint:** `/api/products/25`
+   - Identifies the product with ID 25.
+
+3. **Headers:**
+   - `Host` identifies the server's domain.
+   - `Content-Type` specifies that the request body
+     contains JSON data.
+   - `Accept` specifies that the client can accept
+     a JSON response.
+
+4. **Request Body:**
+   - Contains the product information being submitted.
+   - `price` has a numeric value of `9500`.
+   - `inStock` has a Boolean value of `false`.
+
+**What happens after the request is sent?**
+
+1. The client sends the HTTP request.
+2. The server receives and examines the request.
+3. The server identifies the method and endpoint.
+4. The server interprets the request headers.
+5. The server processes and validates the request body.
+6. The server performs the requested operation.
+7. The server prepares and sends an HTTP response.

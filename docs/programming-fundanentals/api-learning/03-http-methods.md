@@ -185,3 +185,75 @@ POST is not exclusively used for creating resources. Its exact behaviour depends
 **Key Takeaway:**
 
 POST allows a client to submit information to a server for processing. The server validates the information, performs the requested operation and returns an appropriate HTTP response.
+
+# 3. PUT — Replacing Resources
+
+The PUT method is used to create or replace the state of a resource at a specific URL.
+
+It is commonly used to replace an existing resource with a new representation.
+
+## 3.1 Replacing an Existing Resource
+
+Example:
+
+    PUT /api/students/25
+    Content-Type: application/json
+
+    {
+      "name": "Thabo",
+      "course": "Software Development",
+      "email": "thabo.new@example.com"
+    }
+
+The request asks the server to replace the existing representation of the student identified by ID 25.
+
+The request body generally contains the complete representation that the client wants the resource to have.
+
+## 3.2 PUT and Idempotency
+
+PUT is an idempotent HTTP method.
+
+Idempotency means that repeating the same request produces the same intended effect as performing it once.
+
+For example, sending the same PUT request multiple times with identical information will leave the resource in the same intended state.
+
+**Important:**
+
+Idempotency concerns the intended effect on the resource, not whether every response from the server is identical.
+
+## 3.3 PUT vs POST
+
+| POST | PUT |
+|---|---|
+| Commonly used to create resources. | Commonly used to replace resources. |
+| Often targets a collection endpoint. | Often targets a specific resource endpoint. |
+| Generally not idempotent. | Idempotent. |
+| Repeating may create additional resources. | Repeating the same request produces the same intended resource state. |
+
+Example:
+
+    POST /api/students
+
+Creates a new student in the students collection.
+
+    PUT /api/students/10
+
+Replaces the representation of the student identified by ID 10.
+
+## 3.4 When to Use PUT
+
+Use PUT when:
+
+- You want to replace an existing resource.
+- You can provide the complete representation of the resource.
+- You want repeated identical requests to produce the same intended result.
+- You want to create a resource at a specific URL, if the API supports that behaviour.
+
+**Important distinction:**
+
+- PUT replaces a resource's representation.
+- PATCH partially modifies a resource.
+
+**Key Takeaway:**
+
+PUT allows a client to request the replacement of a resource's representation. It is idempotent because repeating the same request produces the same intended resource state.

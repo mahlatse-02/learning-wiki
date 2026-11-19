@@ -623,3 +623,137 @@ The client receives the response, interprets the JSON data and can display the r
 **Key Takeaway:**
 
 The client sends an HTTP request containing instructions and, when necessary, data. The server processes the request and returns an HTTP response containing a status code, headers and, where applicable, a response body.
+
+## 4. How an API Processes a Request and Returns a Response
+
+When an API receives an HTTP request, the server follows a series of steps to process the request and return an appropriate response.
+
+### 4.1 Stages of API Request Processing
+
+The general stages of API request processing include:
+
+1. **Receive the Request**
+
+   The server receives the HTTP request sent by the client.
+
+2. **Identify the Route**
+
+   The API examines the HTTP method and endpoint to determine which operation needs to be performed.
+
+3. **Validate the Request**
+
+   The API checks whether the submitted information is valid and whether all required information has been provided.
+
+4. **Execute Application Logic**
+
+   The server performs the requested operation, such as retrieving, creating or updating information.
+
+5. **Prepare the Response**
+
+   The server determines the appropriate HTTP status code, response headers and response body.
+
+6. **Send the Response**
+
+   The server sends the HTTP response back to the client.
+
+### Example: Registering a Student
+
+Imagine an API receives a request to register a new student:
+
+    POST /api/students
+    Content-Type: application/json
+
+    {
+      "firstName": "Precious",
+      "course": "Software Development"
+    }
+
+The API processes the request, validates the submitted information and creates the student record if everything is valid.
+
+It then returns an appropriate HTTP response to the client.
+
+**Important:**
+
+If validation fails, the API should not proceed with the requested operation. Instead, it should return an appropriate error response explaining the problem.
+
+### 4.2 Handling Successful and Unsuccessful Requests
+
+An API can return either a success response or an error response depending on the outcome of request processing.
+
+#### Successful Requests
+
+A successful request occurs when the API completes the operation requested by the client.
+
+Example: A client submits valid student information, and the API successfully creates the student record.
+
+The server may return:
+
+    HTTP/1.1 201 Created
+    Content-Type: application/json
+
+    {
+      "studentId": 101,
+      "firstName": "Precious",
+      "course": "Software Development"
+    }
+
+#### Unsuccessful Requests
+
+An unsuccessful request occurs when the API cannot complete the operation requested by the client.
+
+This can happen because of:
+
+- Invalid or missing information.
+- Authentication or permission problems.
+- Resources that cannot be found.
+- Server-side or database failures.
+
+Example: A client submits valid student information, but the database becomes unavailable when the API attempts to save the record.
+
+The server may return:
+
+    HTTP/1.1 503 Service Unavailable
+
+A server may also include a `Retry-After` header to indicate when the client should try again.
+
+#### Key Differences
+
+| Successful Request | Unsuccessful Request |
+|---|---|
+| The requested operation is completed. | The requested operation cannot be completed. |
+| Returns an appropriate 2xx status code. | Returns an appropriate error status code, such as 4xx or 5xx. |
+| May return requested or newly created data. | May return an error message explaining the problem. |
+
+**Important:**
+
+A request can pass validation but still fail during execution. Successful validation does not guarantee that the requested operation will be completed.
+
+### 4.3 How Different Programming Languages Communicate Through APIs
+
+Applications written in different programming languages can communicate through APIs because they follow common communication protocols and use agreed data formats.
+
+An API does not require the client and server to be written in the same programming language.
+
+For example:
+- A Python application can act as the client.
+- A JavaScript application can act as the API server.
+- Both applications can communicate using HTTP.
+- They can exchange structured information using JSON.
+
+#### Understanding the Difference Between Protocols and Data Formats
+
+**Communication Protocol (HTTP)**
+
+A protocol defines the rules that applications follow when communicating.
+
+HTTP defines how clients send requests to servers and how servers return responses.
+
+**Data Format (JSON)**
+
+A data format defines how information is structured and represented when it is exchanged between applications.
+
+JSON is commonly used because different programming languages can parse and generate JSON data.
+
+**Key Takeaway:**
+
+APIs allow applications written in different programming languages to communicate by using common protocols, such as HTTP, and agreed data formats, such as JSON.

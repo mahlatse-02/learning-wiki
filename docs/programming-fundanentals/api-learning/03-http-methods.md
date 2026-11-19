@@ -257,3 +257,89 @@ Use PUT when:
 **Key Takeaway:**
 
 PUT allows a client to request the replacement of a resource's representation. It is idempotent because repeating the same request produces the same intended resource state.
+
+# 4. PATCH — Partially Updating Resources
+
+The PATCH method is used to apply partial modifications to an existing resource.
+
+Unlike PUT, which generally sends the complete representation of a resource, PATCH allows the client to submit only the information that needs to change.
+
+## 4.1 Understanding Partial Updates
+
+Example:
+
+    PATCH /api/students/10
+    Content-Type: application/json
+
+    {
+      "email": "precious.new@example.com"
+    }
+
+The request asks the server to update only the email address of the student identified by ID 10.
+
+The other student information, such as the name and course, remains unchanged.
+
+## 4.2 PUT vs PATCH
+
+| PUT | PATCH |
+|---|---|
+| Generally replaces the complete resource representation. | Applies partial modifications to a resource. |
+| Generally requires the complete representation. | Sends only the information that needs to change. |
+| Idempotent. | Can be idempotent or non-idempotent. |
+
+Example of PUT:
+
+    PUT /api/students/15
+
+    {
+      "name": "Tom",
+      "course": "Cybersecurity",
+      "email": "tom@example.com"
+    }
+
+Example of PATCH:
+
+    PATCH /api/students/15
+
+    {
+      "course": "Cybersecurity"
+    }
+
+## 4.3 PATCH and Idempotency
+
+PATCH is not guaranteed to be idempotent.
+
+Whether a PATCH operation is idempotent depends on the operation being performed and how the API implements it.
+
+An idempotent PATCH operation:
+
+    PATCH /api/students/15
+
+    {
+      "course": "Cybersecurity"
+    }
+
+Repeating this request produces the same intended resource state because the course remains Cybersecurity.
+
+A non-idempotent PATCH operation could increment a student's reward points by 10 every time the request is executed.
+
+Repeating that operation would continue increasing the points.
+
+**Important:**
+
+- PUT is defined as idempotent.
+- PATCH can be idempotent or non-idempotent.
+- Idempotency concerns the intended effect of repeating a request.
+
+## 4.4 When to Use PATCH
+
+Use PATCH when:
+
+- You want to update selected fields of an existing resource.
+- You do not need to submit the complete resource representation.
+- You want to avoid sending unnecessary information.
+- You want to modify a resource without replacing its entire representation.
+
+**Key Takeaway:**
+
+PATCH allows a client to partially modify an existing resource by submitting only the information that needs to change.

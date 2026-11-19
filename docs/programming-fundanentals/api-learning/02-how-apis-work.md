@@ -322,3 +322,53 @@ Example of an HTTP response:
 - **Status Code (`200 OK`):** Indicates that the request was successfully processed.
 - **Response Header (`Content-Type: application/json`):** Indicates that the response body contains JSON-formatted data.
 - **Response Body:** Contains the information returned by the server, such as the user's ID, name and email address.
+
+### 3.2 HTTP Status Code Categories
+
+HTTP status codes communicate the outcome of an HTTP request. They are grouped into five categories based on the first digit of the status code.
+
+| Category | Meaning | Description |
+|---|---|---|
+| 1xx | Informational | Indicates that the request has been received and the process is continuing. |
+| 2xx | Success | Indicates that the request was successfully handled. |
+| 3xx | Redirection | Indicates that further action is required, such as following a redirect. |
+| 4xx | Client Error | Indicates that something about the request or the conditions for fulfilling it prevents the request from being completed successfully. |
+| 5xx | Server Error | Indicates that the server encountered a problem while attempting to fulfil the request. |
+
+**Important:**
+
+The first digit of a status code identifies its category. The remaining digits identify the specific status within that category.
+
+For example:
+
+- `200` belongs to the 2xx success category.
+- `404` belongs to the 4xx client error category.
+- `500` belongs to the 5xx server error category.
+
+### 3.3 Common HTTP Success Status Codes (2xx)
+
+The 2xx category indicates that an HTTP request was successfully handled. Different status codes within this category communicate specific outcomes.
+
+| Status Code | Meaning | Description |
+|---|---|---|
+| `200 OK` | Request successful | Indicates that the request was successfully handled. The server may return the requested data in the response body. |
+| `201 Created` | Resource created | Indicates that the request was successfully handled and a new resource was created. |
+| `204 No Content` | Successful request with no content | Indicates that the request was successfully handled, but the server has no response body to return. |
+
+#### 200 OK
+
+Indicates that a request was successfully handled.
+
+Example: A client requests product information, and the server returns the requested product details.
+
+#### 201 Created
+
+Indicates that a request was successfully handled and a new resource was created.
+
+Example: A client submits a registration request, and the server successfully creates a new student account.
+
+#### 204 No Content
+
+Indicates that a request was successfully handled, but the server does not return a response body.
+
+Example: A client requests that a product be deleted, and the server successfully deletes it without returning additional data.

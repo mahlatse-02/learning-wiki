@@ -372,3 +372,47 @@ Example: A client submits a registration request, and the server successfully cr
 Indicates that a request was successfully handled, but the server does not return a response body.
 
 Example: A client requests that a product be deleted, and the server successfully deletes it without returning additional data.
+
+### 3.4 Common HTTP Client Error Status Codes (4xx)
+
+The 4xx category indicates that something about the client's request or the conditions for fulfilling it prevents the server from completing the request successfully.
+
+Common 4xx status codes include:
+
+| Status Code | Meaning | Description |
+|---|---|---|
+| `400 Bad Request` | Invalid request | The server cannot process the request because it contains invalid or incorrect information. |
+| `401 Unauthorized` | Authentication required | The client has not provided valid authentication credentials. |
+| `403 Forbidden` | Access forbidden | The server refuses access because the client does not have the required permissions. |
+| `404 Not Found` | Resource not found | The requested resource cannot be found. |
+
+#### 400 Bad Request
+
+Indicates that the request contains invalid or incorrect information.
+
+Example: A client submits a registration form with missing or invalid required information.
+
+#### 401 Unauthorized
+
+Indicates that the client has not successfully authenticated.
+
+Example: A client tries to access a protected account without valid login credentials.
+
+#### 403 Forbidden
+
+Indicates that the server refuses access because the client does not have the required permissions.
+
+Example: A student logs into a university system but attempts to access a page reserved for lecturers.
+
+#### 404 Not Found
+
+Indicates that the requested resource cannot be found.
+
+Example: A client requests a student profile using an ID that does not exist.
+
+**Important distinction: 401 vs 403**
+
+- Authentication verifies the identity of a user.
+- Authorization determines what an authenticated user is allowed to access.
+- `401` relates to authentication.
+- `403` relates to permissions and access restrictions.

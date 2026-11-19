@@ -85,3 +85,103 @@ five times does not create five student records or introduce additional changes.
 - Idempotent means repeating the request has the same intended effect as performing it once.
 
 GET is both safe and idempotent.
+
+# 2. POST — Creating Resources
+
+The POST method is used to submit data to a server. It is commonly used to create new resources or perform operations that require submitted information.
+
+For example, a student management application can use POST to register a new student.
+
+## 2.1 Creating a Resource
+
+Example:
+
+    POST /api/students
+    Content-Type: application/json
+
+    {
+      "name": "Precious",
+      "course": "Software Development"
+    }
+
+The request asks the server to create a new student resource.
+
+The API receives the request, validates the submitted information and creates the student record if the request is valid.
+
+## 2.2 Understanding the 201 Created Response
+
+When a new resource is successfully created, the server commonly returns the HTTP status code `201 Created`.
+
+Example:
+
+    HTTP/1.1 201 Created
+    Content-Type: application/json
+
+    {
+      "studentId": 104,
+      "name": "Precious",
+      "course": "Software Development"
+    }
+
+The response confirms that a new student resource was created.
+
+The server may assign a unique identifier to the resource so that it can be retrieved or managed in future requests.
+
+## 2.3 POST and Idempotency
+
+POST is generally not an idempotent HTTP method.
+
+Idempotency means that repeating the same request produces the same intended effect as performing it once.
+
+POST is generally not idempotent because repeating the same request can create additional resources or trigger additional operations.
+
+For example, sending the same student registration request multiple times may create duplicate student records.
+
+**Important:**
+
+- GET is safe and idempotent.
+- POST is generally not safe or idempotent.
+- An API can implement safeguards, such as idempotency keys, to prevent duplicate operations.
+
+## 2.4 POST and Request Bodies
+
+POST commonly uses a request body to submit structured information to the server.
+
+Example:
+
+    POST /api/products
+    Content-Type: application/json
+
+    {
+      "name": "Laptop",
+      "price": 15000,
+      "category": "Electronics",
+      "inStock": true
+    }
+
+The request body contains the information that the API needs to process the request and potentially create the new product.
+
+**Why use a request body?**
+
+- It is suitable for submitting structured information.
+- It can contain larger amounts of data than is practical to include in a URL.
+- It supports data formats such as JSON.
+
+Unlike query parameters, which are commonly used for filtering and controlling resource retrieval, request bodies are commonly used to submit resource data.
+
+**Important:** Request bodies are not unlimited. Servers can impose request-size limits.
+
+## 2.5 When to Use POST
+
+POST is commonly used when a client needs to:
+
+- Create a new resource, such as registering a student.
+- Submit information for processing.
+- Place an order in an online shopping application.
+- Submit information that triggers an operation, such as a login request.
+
+POST is not exclusively used for creating resources. Its exact behaviour depends on how the API endpoint is designed.
+
+**Key Takeaway:**
+
+POST allows a client to submit information to a server for processing. The server validates the information, performs the requested operation and returns an appropriate HTTP response.

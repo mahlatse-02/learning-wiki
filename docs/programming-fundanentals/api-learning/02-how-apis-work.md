@@ -416,3 +416,42 @@ Example: A client requests a student profile using an ID that does not exist.
 - Authorization determines what an authenticated user is allowed to access.
 - `401` relates to authentication.
 - `403` relates to permissions and access restrictions.
+
+### 3.5 Common HTTP Server Error Status Codes (5xx)
+
+The 5xx category indicates that the server encountered a problem while attempting to fulfil a client's request.
+
+Common 5xx status codes include:
+
+| Status Code | Meaning | Description |
+|---|---|---|
+| `500 Internal Server Error` | Internal server error | The server encountered an unexpected problem while processing the request. |
+| `503 Service Unavailable` | Service unavailable | The server is temporarily unable to handle requests, often because of maintenance or overload. |
+
+#### 500 Internal Server Error
+
+Indicates that the server encountered an unexpected internal problem while processing a request.
+
+Example: An unexpected error occurs in the server's application code, preventing it from retrieving student information.
+
+#### 503 Service Unavailable
+
+Indicates that the server is temporarily unable to handle requests.
+
+Example: An API server becomes overloaded because thousands of clients are accessing it simultaneously.
+
+The server may recover once the overload has been reduced.
+
+A server may also include a `Retry-After` response header to indicate when the client should try again.
+
+Example:
+
+    HTTP/1.1 503 Service Unavailable
+    Retry-After: 60
+
+This tells the client to wait 60 seconds before retrying.
+
+**Important distinction:**
+
+- `500` indicates an unexpected internal server problem.
+- `503` indicates that the server is temporarily unavailable.

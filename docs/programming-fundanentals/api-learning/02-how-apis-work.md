@@ -556,3 +556,70 @@ Depending on the API, a response body can contain different data formats, includ
 - XML
 - Plain text
 - HTML
+
+### 3.8 Putting an HTTP Request and Response Together
+
+An HTTP request and response work together to allow a client and server to exchange information through an API.
+
+Example: Registering a New Student
+
+#### Part 1: HTTP Request
+
+The client sends the following request:
+
+    POST /api/students HTTP/1.1
+    Host: university.example.com
+    Content-Type: application/json
+    Accept: application/json
+
+    {
+      "firstName": "Precious",
+      "course": "Software Development"
+    }
+
+**Breaking down the request:**
+
+- **HTTP Method (`POST`):** Requests the creation of a new student resource.
+- **Host (`university.example.com`):** Identifies the server's domain.
+- **Endpoint (`/api/students`):** Identifies the students resource.
+- **Content-Type:** Specifies that the request body contains JSON data.
+- **Accept:** Indicates that the client can accept JSON responses.
+- **Request Body:** Contains the information required to register the student.
+
+#### Part 2: Server Processing
+
+After receiving the request, the server:
+
+1. Identifies the HTTP method and endpoint.
+2. Reads and interprets the request headers.
+3. Processes the JSON request body.
+4. Validates the submitted student information.
+5. Creates a new student resource if the information is valid.
+6. Prepares an HTTP response.
+
+#### Part 3: HTTP Response
+
+The server returns:
+
+    HTTP/1.1 201 Created
+    Content-Type: application/json
+
+    {
+      "studentId": 101,
+      "firstName": "Precious",
+      "course": "Software Development"
+    }
+
+**Breaking down the response:**
+
+- **Status Code (`201 Created`):** Indicates that a new student resource was successfully created.
+- **Response Header (`Content-Type`):** Specifies that the response body contains JSON data.
+- **Response Body:** Contains the details of the newly created student.
+
+#### Part 4: Client Receives the Response
+
+The client receives the response, interprets the JSON data and can display the registration result to the user.
+
+**Key Takeaway:**
+
+The client sends an HTTP request containing instructions and, when necessary, data. The server processes the request and returns an HTTP response containing a status code, headers and, where applicable, a response body.

@@ -455,3 +455,56 @@ This tells the client to wait 60 seconds before retrying.
 
 - `500` indicates an unexpected internal server problem.
 - `503` indicates that the server is temporarily unavailable.
+
+### 3.6 HTTP Response Headers
+
+HTTP response headers provide additional information (metadata) about the response being sent from the server to the client.
+
+They help the client understand the response and determine how to handle the returned information.
+
+Common HTTP response headers include:
+
+**1. Content-Type**
+
+Specifies the format of the data contained in the response body.
+
+Example:
+
+    Content-Type: application/json
+
+This tells the client that the response body contains JSON-formatted data.
+
+**2. Content-Length**
+
+Indicates the size of the response body in bytes.
+
+Example:
+
+    Content-Length: 250
+
+This indicates that the response body is 250 bytes long.
+
+**3. Cache-Control**
+
+Provides instructions about whether and how a response can be stored and reused from a cache.
+
+Example:
+
+    Cache-Control: no-cache
+
+This means a cached response must be revalidated with the server before it is reused.
+
+**4. Set-Cookie**
+
+Instructs a browser to store a cookie, which can be sent back to the server in later requests.
+
+Example:
+
+    Set-Cookie: sessionId=abc123
+
+This instructs the browser to store a cookie named `sessionId`.
+
+**Important distinction: Accept vs Content-Type**
+
+- `Accept` is a request header that tells the server which response formats the client can accept.
+- `Content-Type` is a response header that specifies the format of the content being returned.

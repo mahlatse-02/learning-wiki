@@ -508,3 +508,51 @@ This instructs the browser to store a cookie named `sessionId`.
 
 - `Accept` is a request header that tells the server which response formats the client can accept.
 - `Content-Type` is a response header that specifies the format of the content being returned.
+
+### 3.7 HTTP Response Body
+
+The response body is the part of an HTTP response that contains the data returned by the server to the client.
+
+The server uses the response body to provide the requested information or communicate the result of an operation.
+
+Example:
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+
+    {
+      "productId": 25,
+      "productName": "Laptop",
+      "price": 12000
+    }
+
+**Breaking down the response:**
+
+- `200 OK` indicates that the request was successfully handled.
+- `Content-Type: application/json` indicates that the response body contains JSON-formatted data.
+- The JSON object contains the product information returned by the server.
+
+The response body contains three pieces of information:
+
+- `productId`: Identifies the product with ID 25.
+- `productName`: Contains the product's name, Laptop.
+- `price`: Contains the product's price, 12000.
+
+#### Does Every HTTP Response Have a Body?
+
+No. Some HTTP responses do not contain a response body.
+
+For example:
+
+    HTTP/1.1 204 No Content
+
+This indicates that the request was successfully handled, but the server has no response body to return.
+
+#### Common Response Body Formats
+
+Depending on the API, a response body can contain different data formats, including:
+
+- JSON
+- XML
+- Plain text
+- HTML

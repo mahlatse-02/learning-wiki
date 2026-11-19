@@ -293,3 +293,32 @@ Example:
 5. The server processes and validates the request body.
 6. The server performs the requested operation.
 7. The server prepares and sends an HTTP response.
+
+## Understanding HTTP Responses
+
+### 3.1 The Three Main Components of an HTTP Response
+
+An HTTP response is a message sent by a server to a client after receiving and processing an HTTP request.
+
+An HTTP response consists of three main components:
+
+1. **Status Code:** Indicates the outcome of the request.
+2. **Headers:** Provide additional information about the response, such as the data format being returned.
+3. **Body:** Contains the data returned by the server, if applicable.
+
+Example of an HTTP response:
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+
+    {
+      "id": 15,
+      "name": "John Smith",
+      "email": "john@example.com"
+    }
+
+**Breaking down the response:**
+
+- **Status Code (`200 OK`):** Indicates that the request was successfully processed.
+- **Response Header (`Content-Type: application/json`):** Indicates that the response body contains JSON-formatted data.
+- **Response Body:** Contains the information returned by the server, such as the user's ID, name and email address.

@@ -264,3 +264,77 @@ The client may need to check the status of the operation later to determine whet
 - `202 Accepted`: The request has been accepted for processing, but processing may still be incomplete.
 
 **Important:** A `202 Accepted` response does not guarantee that the operation will eventually succeed. It only confirms that the server accepted the request for processing.
+
+# 7. 3xx — Redirection Responses
+
+The `3xx` category represents HTTP redirection responses. These status codes indicate that the client needs to take additional action to complete its request.
+
+Redirection commonly occurs when a resource has moved to another URL.
+
+For example, imagine a website changes the location of a page from:
+
+    https://example.com/old-page
+
+to:
+
+    https://example.com/new-page
+
+When the client requests the old URL, the server can return a redirection response containing the new URL.
+
+**Example response:**
+
+    HTTP/1.1 301 Moved Permanently
+    Location: https://example.com/new-page
+
+The `Location` header tells the client where the resource can now be found.
+
+The client can then follow the new URL to access the resource.
+
+**Important:** A redirection response does not necessarily mean that the request failed. It means the client needs to take another action, such as following a new URL.
+
+# 8. 301 Moved Permanently
+
+The `301 Moved Permanently` status code indicates that a resource has permanently moved to a new URL.
+
+When a client requests the old URL, the server responds with a `301` status code and provides the new URL through the `Location` response header.
+
+**Example:**
+
+    GET /api/students/registration
+
+**Server response:**
+
+    HTTP/1.1 301 Moved Permanently
+    Location: /api/registration/students
+
+The client can then follow the new URL to access the resource.
+
+**Important:** A `301` response indicates that the resource has permanently moved. Clients should use the new URL instead of continuing to rely on the old one.
+
+# 9. 302 Found
+
+The `302 Found` status code indicates that a resource is temporarily available at a different URL.
+
+Unlike `301 Moved Permanently`, the original URL is still considered the resource's permanent location. The client is temporarily redirected to another URL.
+
+**Example:**
+
+A university temporarily moves its registration page while performing maintenance.
+
+    GET /api/students/registration
+
+**Server response:**
+
+    HTTP/1.1 302 Found
+    Location: /api/temporary-registration
+
+The client can follow the new URL to access the temporary registration page.
+
+Once maintenance is complete, the university can restore the original endpoint.
+
+**Difference between 301 and 302:**
+
+- `301 Moved Permanently`: The resource has permanently moved to another URL.
+- `302 Found`: The resource is temporarily available at another URL.
+
+**Important:** A `302` response does not mean that the original URL has been permanently replaced.

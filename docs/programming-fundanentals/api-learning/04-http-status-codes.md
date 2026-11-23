@@ -126,3 +126,141 @@ The response body may contain the updated representation of the resource.
 - `200 OK` indicates successful processing.
 - The response body may contain information returned by the server.
 - The meaning of `200 OK` depends on the operation performed.
+
+# 4. 201 Created
+
+`201 Created` is a successful HTTP status code that indicates that a request successfully resulted in the creation of a new resource.
+
+It is commonly returned when a client uses the POST method to create a resource.
+
+## 4.1 201 Created with POST
+
+Example:
+
+    POST /api/students
+    Content-Type: application/json
+
+    {
+      "name": "Lerato",
+      "course": "Software Development"
+    }
+
+Response:
+
+    HTTP/1.1 201 Created
+    Content-Type: application/json
+
+    {
+      "studentId": 101,
+      "name": "Lerato",
+      "course": "Software Development"
+    }
+
+The `201 Created` status code communicates that the server successfully created a new student resource.
+
+The response body may contain information about the newly created resource, including the unique identifier assigned by the server.
+
+## 4.2 The Location Header
+
+A server may include a `Location` header in a `201 Created` response.
+
+Example:
+
+    HTTP/1.1 201 Created
+    Location: /api/students/101
+    Content-Type: application/json
+
+    {
+      "studentId": 101,
+      "name": "Lerato",
+      "course": "Software Development"
+    }
+
+The `Location` header identifies the URL of the newly created resource.
+
+**Important:**
+
+- `201 Created` indicates that a new resource was successfully created.
+- The server may return the newly created resource in the response body.
+- The `Location` header may identify where the new resource can be accessed.
+
+# 5. 204 No Content
+
+`204 No Content` is a successful HTTP status code that indicates that the server successfully processed the request but has no response content to return.
+
+It is commonly used when an operation is successful and the client does not need additional information in the response body.
+
+## 5.1 204 No Content with DELETE
+
+Example:
+
+    DELETE /api/students/25
+
+Response:
+
+    HTTP/1.1 204 No Content
+
+The response communicates that the deletion request was successfully processed.
+
+The server does not return a response body because no additional content is being provided.
+
+## 5.2 204 No Content with PUT
+
+A server can also return `204 No Content` after successfully updating a resource.
+
+Example:
+
+    PUT /api/students/10
+    Content-Type: application/json
+
+    {
+      "name": "Precious",
+      "course": "Cybersecurity"
+    }
+
+Response:
+
+    HTTP/1.1 204 No Content
+
+The response communicates that the update was successful without returning the updated resource representation.
+
+## 5.3 200 OK vs 204 No Content
+
+| 200 OK | 204 No Content |
+|---|---|
+| Indicates successful processing. | Indicates successful processing. |
+| May include a response body. | Does not include a response body. |
+| Commonly returns requested or updated information. | Used when no response content needs to be returned. |
+
+**Important:**
+
+- `204 No Content` indicates a successful operation.
+- It does not mean the server has no information.
+- A 204 response must not contain response content.
+
+# 6. 202 Accepted
+
+The `202 Accepted` status code indicates that the server has accepted a request for processing, but the processing has not necessarily been completed.
+
+It is commonly used for long-running operations that may take time to finish.
+
+For example, when a client requests a large financial report, the server may accept the request and place it in a processing queue.
+
+**Example response:**
+
+    HTTP/1.1 202 Accepted
+    Content-Type: application/json
+
+    {
+      "message": "Report generation has started.",
+      "status": "Processing"
+    }
+
+The client may need to check the status of the operation later to determine whether it has completed successfully.
+
+**Difference between 200 OK and 202 Accepted:**
+
+- `200 OK`: The request has been successfully processed.
+- `202 Accepted`: The request has been accepted for processing, but processing may still be incomplete.
+
+**Important:** A `202 Accepted` response does not guarantee that the operation will eventually succeed. It only confirms that the server accepted the request for processing.

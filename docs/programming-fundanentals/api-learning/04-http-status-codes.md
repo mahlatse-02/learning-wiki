@@ -66,3 +66,63 @@ Examples:
 **Key Takeaway:**
 
 The first digit of an HTTP status code identifies its category and helps the client understand the general outcome of its request.
+
+# 3. 200 OK
+
+`200 OK` is a successful HTTP status code that indicates that the server successfully processed the request.
+
+The exact meaning of `200 OK` depends on the HTTP method used.
+
+## 3.1 200 OK with GET
+
+Example:
+
+    GET /api/products/25
+
+Response:
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+
+    {
+      "productId": 25,
+      "name": "Laptop",
+      "price": 15000
+    }
+
+The `200 OK` status code communicates that the request was successfully processed.
+
+The response body contains the information retrieved by the server and returned to the client.
+
+## 3.2 200 OK with PUT
+
+Example:
+
+    PUT /api/students/10
+    Content-Type: application/json
+
+    {
+      "name": "Precious",
+      "course": "Cybersecurity"
+    }
+
+Response:
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+
+    {
+      "studentId": 10,
+      "name": "Precious",
+      "course": "Cybersecurity"
+    }
+
+The `200 OK` status code communicates that the update was successfully processed.
+
+The response body may contain the updated representation of the resource.
+
+**Important:**
+
+- `200 OK` indicates successful processing.
+- The response body may contain information returned by the server.
+- The meaning of `200 OK` depends on the operation performed.

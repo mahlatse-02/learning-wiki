@@ -338,3 +338,278 @@ Once maintenance is complete, the university can restore the original endpoint.
 - `302 Found`: The resource is temporarily available at another URL.
 
 **Important:** A `302` response does not mean that the original URL has been permanently replaced.
+
+# 10. 4xx — Client Error Responses
+
+The `4xx` category represents HTTP client error responses. These status codes indicate that there is a problem with the request sent by the client, which prevents the server from fulfilling it.
+
+Client errors may occur when:
+
+- The client sends invalid or incomplete information.
+- The client provides incorrect authentication credentials.
+- The client requests a resource that does not exist.
+- The client does not have permission to access a resource.
+
+**Example:**
+
+A client requests a student record using an invalid student ID.
+
+    GET /api/students/abc
+
+The server expects a numeric student ID but receives `abc`.
+
+**Server response:**
+
+    HTTP/1.1 400 Bad Request
+    Content-Type: application/json
+
+    {
+      "error": "Invalid student ID."
+    }
+
+The `400 Bad Request` status code indicates that the request contains invalid information.
+
+**Important distinction:**
+
+- `4xx`: The problem is related to the client's request or access.
+- `5xx`: The server encounters a problem while trying to fulfil a request.
+
+# 11. 400 Bad Request
+
+The `400 Bad Request` status code indicates that the server cannot process a request because it contains invalid information or is incorrectly formatted.
+
+This can happen when:
+
+- Required information is missing.
+- The client sends data in an invalid format.
+- The request contains incorrect parameter values.
+- The request body contains invalid JSON.
+
+**Example:**
+
+A client wants to register a new student but sends an invalid email address.
+
+    POST /api/students
+    Content-Type: application/json
+
+    {
+      "name": "Precious",
+      "email": "precious-email"
+    }
+
+The server expects a properly formatted email address.
+
+**Server response:**
+
+    HTTP/1.1 400 Bad Request
+    Content-Type: application/json
+
+    {
+      "error": "Invalid email address."
+    }
+
+The client must correct the information and submit the request again.
+
+**Important:** A `400 Bad Request` indicates a problem with the request itself, not necessarily a problem with the server.
+
+# 12. 401 Unauthorized
+
+The `401 Unauthorized` status code indicates that the client's request does not contain valid authentication credentials.
+
+Authentication is the process of verifying the identity of a user or application.
+
+This error commonly occurs when:
+
+- The client provides an incorrect password.
+- The client does not provide authentication credentials.
+- An authentication token is invalid or has expired.
+
+**Example:**
+
+A student wants to access their university results but provides an incorrect password.
+
+**Server response:**
+
+    HTTP/1.1 401 Unauthorized
+    Content-Type: application/json
+
+    {
+      "error": "Invalid username or password."
+    }
+
+The client must provide valid authentication credentials before the server can authenticate the user.
+
+**Important:** A `401 Unauthorized` response relates to authentication, not permission.
+
+**Difference between 401 and 403:**
+
+- `401 Unauthorized`: The client has not successfully authenticated.
+- `403 Forbidden`: The client is authenticated but does not have permission to access the requested resource.
+
+# 13. 403 Forbidden
+
+The `403 Forbidden` status code indicates that the server understands the client's request but refuses to fulfil it because the client does not have the required permissions.
+
+This commonly happens when:
+
+- A student tries to access administrator-only features.
+- An ordinary user tries to access restricted information.
+- An authenticated user attempts an operation they are not allowed to perform.
+
+**Example:**
+
+A student successfully signs in to a university system but tries to access the administrator dashboard.
+
+    GET /api/admin/dashboard
+    Authorization: Bearer valid_student_token
+
+**Server response:**
+
+    HTTP/1.1 403 Forbidden
+    Content-Type: application/json
+
+    {
+      "error": "You do not have permission to access this resource."
+    }
+
+The server recognises the student but refuses access because the student does not have administrator privileges.
+
+**Important:** A `403 Forbidden` response does not necessarily mean that the client has failed to authenticate. The client may be successfully authenticated but lack the required authorization.
+
+# 14. 404 Not Found
+
+The `404 Not Found` status code indicates that the server cannot find the specific resource requested by the client.
+
+This commonly happens when:
+
+- The client requests a resource using an incorrect ID.
+- The requested resource does not exist.
+- The client uses an incorrect endpoint or URL.
+- A resource has been deleted.
+
+**Example:**
+
+A client wants to retrieve information about a student with ID `150`, but no student with that ID exists.
+
+    GET /api/students/150
+
+**Server response:**
+
+    HTTP/1.1 404 Not Found
+    Content-Type: application/json
+
+    {
+      "error": "Student not found."
+    }
+
+The server cannot return the requested student information because the resource cannot be found.
+
+**Important:** A `404 Not Found` response does not necessarily mean that the entire API or server is unavailable. It means the specific resource requested could not be found.
+
+# 15. 405 Method Not Allowed
+
+The `405 Method Not Allowed` status code indicates that the server recognises the requested resource, but the HTTP method used is not allowed for that resource.
+
+For example:
+
+- An API allows `GET` to retrieve product information.
+- The API does not allow `PATCH` on that endpoint.
+- A client sends a `PATCH` request to that endpoint.
+
+**Example request:**
+
+    PATCH /api/products/25
+
+**Server response:**
+
+    HTTP/1.1 405 Method Not Allowed
+    Allow: GET
+    Content-Type: application/json
+
+    {
+      "error": "PATCH method is not allowed for this resource."
+    }
+
+The `Allow` response header tells the client which HTTP methods are supported by the resource.
+
+**Difference between 404 and 405:**
+
+- `404 Not Found`: The requested resource cannot be found.
+- `405 Method Not Allowed`: The resource exists, but the HTTP method used is not supported for it.
+
+**Important:** The problem is the HTTP method used, not the existence of the resource.
+
+# 16. 409 Conflict
+
+The `409 Conflict` status code indicates that the client's request conflicts with the current state of a resource on the server.
+
+This commonly happens when:
+
+- A client tries to register an email address that is already in use.
+- A client tries to create a resource that already exists.
+- An update conflicts with a change made by another user.
+
+**Example:**
+
+A student tries to register an account using an email address that already belongs to another student.
+
+    POST /api/students
+    Content-Type: application/json
+
+    {
+      "name": "Precious",
+      "email": "precious@example.com"
+    }
+
+**Server response:**
+
+    HTTP/1.1 409 Conflict
+    Content-Type: application/json
+
+    {
+      "error": "An account with this email address already exists."
+    }
+
+The server refuses to create the account because doing so would conflict with an existing resource.
+
+**Difference between 400 and 409:**
+
+- `400 Bad Request`: The request contains invalid or malformed information.
+- `409 Conflict`: The request may be valid, but it conflicts with the current state of a resource.
+
+**Important:** A `409 Conflict` response means the client may need to resolve the conflict before retrying the request.
+
+## 17. 422 Unprocessable Content
+
+The 422 Unprocessable Content status code indicates that the server understands the request and its format, but cannot process the instructions because the provided information fails validation or business rules.
+
+For example, an API may require students to be at least 17 years old. If a client sends an age of 12, the request may be rejected with a 422 status code.
+
+### Example
+
+A valid JSON request:
+
+{
+    "age": 12
+}
+
+The value is an integer, but it does not satisfy the API's age requirement.
+
+### Difference Between 400 and 422
+
+- 400 Bad Request: The request contains invalid or malformed information, such as an incorrect data type.
+- 422 Unprocessable Content: The request is correctly formatted, but its content violates a validation rule or business requirement.
+
+## 18. 429 Too Many Requests
+
+The 429 Too Many Requests status code indicates that a client has sent too many requests within a specified period.
+
+APIs use rate limiting to control how frequently clients can make requests and to prevent excessive traffic from affecting server performance.
+
+### Example
+
+An API allows a user to make 100 requests per minute.
+
+If the user sends 150 requests within one minute, the API may reject additional requests and return a 429 status code.
+
+The response may include a `Retry-After` header indicating how long the client should wait before trying again.

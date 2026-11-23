@@ -401,3 +401,83 @@ This request asks the server to delete the product identified by ID 10.
 **Key Takeaway:**
 
 DELETE allows a client to request the removal of a resource from a server. It is idempotent because repeating the same request has the same intended effect on the resource.
+
+# 6. Comparing the Five HTTP Methods
+
+HTTP methods communicate the type of operation a client wants the server to perform on a resource.
+
+Each method has a specific purpose.
+
+| HTTP Method | Purpose | Idempotent? |
+|---|---|---|
+| GET | Retrieve information from the server. | Yes |
+| POST | Submit information or create a resource. | Generally no |
+| PUT | Replace the representation of a resource. | Yes |
+| PATCH | Partially modify an existing resource. | Depends on the operation |
+| DELETE | Request the removal of a resource. | Yes |
+
+## 6.1 Understanding the Differences
+
+### GET
+Used when a client wants to retrieve information without intending to modify the server's resource state.
+
+Example:
+
+    GET /api/students/10
+
+### POST
+Used when a client wants to submit information to the server, commonly to create a new resource.
+
+Example:
+
+    POST /api/students
+
+### PUT
+Used when a client wants to replace the complete representation of an existing resource.
+
+Example:
+
+    PUT /api/students/10
+
+### PATCH
+Used when a client wants to modify only selected fields of an existing resource.
+
+Example:
+
+    PATCH /api/students/10
+
+### DELETE
+Used when a client wants to request the removal of a resource.
+
+Example:
+
+    DELETE /api/students/10
+
+## 6.2 HTTP Methods and Resource-Oriented Endpoints
+
+An API can use the same endpoint with different HTTP methods to perform different operations on the same resource.
+
+For example:
+
+    GET /api/students/10
+    PUT /api/students/10
+    PATCH /api/students/10
+    DELETE /api/students/10
+
+The endpoint identifies the resource, while the HTTP method communicates the operation the client wants to perform.
+
+This approach makes API design more consistent and predictable.
+
+## 6.3 Why Choosing the Correct HTTP Method Matters
+
+Choosing the correct HTTP method is important because:
+
+- It communicates the intended operation to the server.
+- It helps maintain data integrity.
+- It ensures requests are processed according to their purpose.
+- It makes API behaviour more predictable.
+- It helps prevent unintended resource modifications.
+
+**Key Takeaway:**
+
+HTTP methods define how clients interact with resources on a server. Choosing the correct method ensures that resources are retrieved, created, replaced, modified or removed appropriately.

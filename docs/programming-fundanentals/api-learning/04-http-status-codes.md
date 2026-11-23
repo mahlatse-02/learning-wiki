@@ -613,3 +613,210 @@ An API allows a user to make 100 requests per minute.
 If the user sends 150 requests within one minute, the API may reject additional requests and return a 429 status code.
 
 The response may include a `Retry-After` header indicating how long the client should wait before trying again.
+
+# 19. 5xx — Server Error Responses
+
+The 5xx category represents HTTP status codes that indicate the server encountered a problem while attempting to process a valid client request.
+
+These errors generally indicate that the problem is on the server side rather than with the client's request.
+
+Examples include:
+
+- 500 Internal Server Error
+- 502 Bad Gateway
+- 503 Service Unavailable
+- 504 Gateway Timeout
+
+### Important distinction
+
+- 4xx: The request has a problem or the client cannot access the requested resource.
+- 5xx: The server cannot fulfil a valid request because of a server-side problem.
+
+## 20. 500 Internal Server Error
+
+The 500 Internal Server Error status code indicates that the server encountered an unexpected problem while processing a valid client request.
+
+This means that the request may be correctly structured and contain valid information, but an internal server problem prevents the operation from being completed.
+
+### Example
+
+A student submits a valid registration request. However, an unexpected error occurs in the server's application code, preventing the registration from being completed.
+
+The API returns:
+
+HTTP/1.1 500 Internal Server Error
+
+### Difference Between 400 and 500
+
+- 400 Bad Request: The problem originates from the client's request.
+- 500 Internal Server Error: The problem originates from the server while processing the request.
+
+## 21. 502 Bad Gateway
+
+The 502 Bad Gateway status code indicates that a server acting as a gateway or proxy received an invalid response from another server while attempting to fulfil a client request.
+
+### Example
+
+1. A client sends a request to an API.
+2. The API gateway forwards the request to a backend server.
+3. The backend server returns an invalid response.
+4. The gateway returns a 502 Bad Gateway status code to the client.
+
+### Difference Between 500 and 502
+
+- 500 Internal Server Error: An unexpected internal problem occurs within the server processing the request.
+- 502 Bad Gateway: A gateway or proxy receives an invalid response from an upstream server.
+
+## 22. 503 Service Unavailable
+
+The 503 Service Unavailable status code indicates that a server is temporarily unable to handle incoming requests.
+
+This may happen because of:
+
+- Server overload.
+- Scheduled maintenance.
+- Temporary service disruptions.
+
+### Example
+
+An API server is undergoing scheduled maintenance and cannot process incoming requests.
+
+The API returns:
+
+HTTP/1.1 503 Service Unavailable
+
+The client may retry the request later.
+
+The response may also include a `Retry-After` header indicating when the client should try again.
+
+### Difference Between 500 and 503
+
+- 500 Internal Server Error: The server encounters an unexpected internal problem while processing a request.
+- 503 Service Unavailable: The server is temporarily unable to handle requests.
+
+## 23. 504 Gateway Timeout
+
+The 504 Gateway Timeout status code indicates that a server acting as a gateway or proxy did not receive a response from an upstream server within the expected time.
+
+### Example
+
+1. A client sends a request to an API gateway.
+2. The gateway forwards the request to a backend server.
+3. The backend server takes too long to respond.
+4. The gateway returns a 504 Gateway Timeout status code to the client.
+
+### Difference Between 502 and 504
+
+- 502 Bad Gateway: The gateway receives an invalid response from an upstream server.
+- 504 Gateway Timeout: The gateway does not receive a timely response from an upstream server.
+
+## 24. Interpreting HTTP Status Codes
+
+When working with APIs, HTTP status codes help developers understand the outcome of a client's request.
+
+A status code allows the client to determine whether:
+
+- The request was successful.
+- The resource has moved to another location.
+- There is a problem with the client's request.
+- The server encountered a problem while processing the request.
+
+### How to Interpret a Status Code
+
+When interpreting an HTTP status code, consider:
+
+1. **The status code:** What does the code communicate?
+2. **The request method:** Was the client using GET, POST, PUT, PATCH or DELETE?
+3. **The response body:** Does the server provide additional information about the result?
+4. **The response headers:** Do they provide useful information, such as a new resource location or when to retry?
+
+### Example
+
+A client sends a POST request to register a new student.
+
+The server responds:
+
+HTTP/1.1 201 Created
+
+This tells the client that the registration request was successfully processed and a new resource was created.
+
+The response may also contain the newly created student's information.
+
+## 25. HTTP Status Codes and API Responses
+
+An HTTP response contains several components that help the client understand the result of a request.
+
+These include:
+
+1. **Status code:** Indicates the outcome of the request.
+2. **Response headers:** Provide additional information about the response, such as the content type or instructions for retrying a request.
+3. **Response body:** Contains the data or message returned by the server, when applicable.
+
+### Example
+
+A client sends a POST request to register a student.
+
+The server returns:
+
+HTTP/1.1 201 Created
+Content-Type: application/json
+Location: /api/students/101
+
+{
+    "id": 101,
+    "name": "Precious",
+    "email": "precious@example.com"
+}
+
+In this example:
+
+- `201 Created` indicates that a new student resource was successfully created.
+- `Content-Type` identifies the format of the response body.
+- `Location` identifies the URL of the newly created resource.
+- The response body contains the newly created student's information.
+
+### Important
+
+A status code does not always tell the client everything about the response. Developers should also examine the response headers and body when additional information is needed.
+
+## 26. Summary of Common HTTP Status Codes
+
+HTTP status codes are grouped into five categories. Each category communicates a different outcome of an HTTP request.
+
+### 1xx — Informational Responses
+
+- `100 Continue`: The server has received the initial part of the request and the client can continue.
+
+### 2xx — Successful Responses
+
+- `200 OK`: The request was successfully processed.
+- `201 Created`: A new resource was successfully created.
+- `202 Accepted`: The request was accepted for processing but has not necessarily been completed.
+- `204 No Content`: The request was successfully processed, but no response body is returned.
+
+### 3xx — Redirection Responses
+
+- `301 Moved Permanently`: The resource has permanently moved to another URL.
+- `302 Found`: The resource is temporarily available at another URL.
+
+### 4xx — Client Error Responses
+
+- `400 Bad Request`: The request contains invalid or malformed information.
+- `401 Unauthorized`: Valid authentication credentials are missing or invalid.
+- `403 Forbidden`: The client does not have permission to access the requested resource or perform the operation.
+- `404 Not Found`: The requested resource could not be found.
+- `405 Method Not Allowed`: The HTTP method is not supported for the requested resource.
+- `409 Conflict`: The request conflicts with the current state of a resource.
+- `422 Unprocessable Content`: The request is correctly formatted, but its content fails validation or business rules.
+- `429 Too Many Requests`: The client has exceeded the allowed request rate.
+
+### 5xx — Server Error Responses
+
+- `500 Internal Server Error`: The server encountered an unexpected internal problem.
+- `502 Bad Gateway`: A gateway received an invalid response from an upstream server.
+- `503 Service Unavailable`: The server is temporarily unable to handle requests.
+- `504 Gateway Timeout`: A gateway did not receive a timely response from an upstream server.
+
+### Key Takeaway
+
+Understanding HTTP status codes helps developers identify the outcome of API requests, troubleshoot problems and build applications that handle responses appropriately.

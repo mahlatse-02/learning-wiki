@@ -1,4 +1,4 @@
-# Introduction to Express.js
+9# Introduction to Express.js
 
 ## 2. The Relationship Between JavaScript, Node.js and Express.js
 
@@ -307,6 +307,7 @@ app.get("/api/students", (req, res) => {
         message: "Students retrieved successfully"
     });
 });
+```
 
 ### Understanding the Difference Between 200 OK and 201 Created
 

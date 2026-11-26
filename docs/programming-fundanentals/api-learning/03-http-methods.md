@@ -344,6 +344,144 @@ Use PATCH when:
 
 PATCH allows a client to partially modify an existing resource by submitting only the information that needs to change.
 
+# 5. DELETE — Removing Resources
+
+The DELETE method is used when a client requests the removal of a resource from the server.
+
+For example:
+
+    DELETE /api/students/15
+
+This request asks the server to delete the student identified by ID 15.
+
+## 5.1 DELETE Responses
+
+A successful DELETE request can return different HTTP status codes depending on how the server handles the deletion.
+
+| Status Code | Meaning |
+|---|---|
+| `200 OK` | The resource was deleted, and the server returned a response. |
+| `202 Accepted` | The deletion request was accepted but has not yet been completed. |
+| `204 No Content` | The resource was deleted successfully, and there is no response body. |
+
+## 5.2 DELETE and Idempotency
+
+DELETE is an idempotent HTTP method.
+
+Idempotency means that repeating the same request produces the same intended effect as performing it once.
+
+For example:
+
+    DELETE /api/students/25
+
+The first request deletes the student resource.
+
+Repeating the same request does not delete additional student resources or cause the student to be removed multiple times.
+
+The intended result remains the same: the student resource no longer exists.
+
+The server may return different status codes when the request is repeated. For example, it may return `204 No Content` initially and `404 Not Found` on a subsequent request if the resource is already gone.
+
+This does not necessarily make DELETE non-idempotent because idempotency concerns the intended effect on the resource, not identical response codes.
+
+## 5.3 When to Use DELETE
+
+Use DELETE when:
+
+- You want to remove a specific resource.
+- You want to delete a record, such as a student or product.
+- You want to request the removal of a resource identified by an endpoint.
+
+Example:
+
+    DELETE /api/products/10
+
+This request asks the server to delete the product identified by ID 10.
+
+**Key Takeaway:**
+
+DELETE allows a client to request the removal of a resource from a server. It is idempotent because repeating the same request has the same intended effect on the resource.
+
+# 6. Comparing the Five HTTP Methods
+
+HTTP methods communicate the type of operation a client wants the server to perform on a resource.
+
+Each method has a specific purpose.
+
+| HTTP Method | Purpose | Idempotent? |
+|---|---|---|
+| GET | Retrieve information from the server. | Yes |
+| POST | Submit information or create a resource. | Generally no |
+| PUT | Replace the representation of a resource. | Yes |
+| PATCH | Partially modify an existing resource. | Depends on the operation |
+| DELETE | Request the removal of a resource. | Yes |
+
+## 6.1 Understanding the Differences
+
+### GET
+Used when a client wants to retrieve information without intending to modify the server's resource state.
+
+Example:
+
+    GET /api/students/10
+
+### POST
+Used when a client wants to submit information to the server, commonly to create a new resource.
+
+Example:
+
+    POST /api/students
+
+### PUT
+Used when a client wants to replace the complete representation of an existing resource.
+
+Example:
+
+    PUT /api/students/10
+
+### PATCH
+Used when a client wants to modify only selected fields of an existing resource.
+
+Example:
+
+    PATCH /api/students/10
+
+### DELETE
+Used when a client wants to request the removal of a resource.
+
+Example:
+
+    DELETE /api/students/10
+
+## 6.2 HTTP Methods and Resource-Oriented Endpoints
+
+An API can use the same endpoint with different HTTP methods to perform different operations on the same resource.
+
+For example:
+
+    GET /api/students/10
+    PUT /api/students/10
+    PATCH /api/students/10
+    DELETE /api/students/10
+
+The endpoint identifies the resource, while the HTTP method communicates the operation the client wants to perform.
+
+This approach makes API design more consistent and predictable.
+
+## 6.3 Why Choosing the Correct HTTP Method Matters
+
+Choosing the correct HTTP method is important because:
+
+- It communicates the intended operation to the server.
+- It helps maintain data integrity.
+- It ensures requests are processed according to their purpose.
+- It makes API behaviour more predictable.
+- It helps prevent unintended resource modifications.
+
+**Key Takeaway:**
+
+HTTP methods define how clients interact with resources on a server. Choosing the correct method ensures that resources are retrieved, created, replaced, modified or removed appropriately.
+
 
 # 5. DELETE — Removing Resources
 
